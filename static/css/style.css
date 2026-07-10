@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap');
+
 /* ═══════════════════════════════════════════════════════════════════
    InterviewAI — Dark Theme + Glassmorphism CSS
    ChatGPT/Claude-style layout
@@ -6,54 +8,54 @@
 /* ── Design Tokens ──────────────────────────────────────────────── */
 :root {
   /* Background layers */
-  --bg-base:        #0d0f14;
-  --bg-surface:     #13151c;
-  --bg-elevated:    #1a1d27;
-  --bg-glass:       rgba(26, 29, 39, 0.7);
-  --bg-glass-hover: rgba(30, 34, 48, 0.85);
+  --bg-base:        #050507; /* obsidian zinc dark */
+  --bg-surface:     #09090b; /* zinc 950 */
+  --bg-elevated:    #18181b; /* zinc 900 */
+  --bg-glass:       rgba(9, 9, 11, 0.45);
+  --bg-glass-hover: rgba(24, 24, 27, 0.65);
 
   /* Borders */
-  --border:         rgba(255,255,255,0.07);
-  --border-focus:   rgba(129,140,248,0.6);
+  --border:         rgba(255,255,255,0.06);
+  --border-focus:   rgba(99,102,241,0.6);
 
   /* Text */
-  --text-primary:   #e8eaf0;
-  --text-secondary: #8b92a8;
-  --text-muted:     #555d75;
-  --text-inverse:   #0d0f14;
+  --text-primary:   #fafafa; /* zinc 50 */
+  --text-secondary: #a1a1aa; /* zinc 400 */
+  --text-muted:     #52525b; /* zinc 600 */
+  --text-inverse:   #09090b;
 
   /* Accent palette */
-  --accent:         #818cf8;
-  --accent-hover:   #6366f1;
-  --accent-glow:    rgba(129,140,248,0.25);
-  --success:        #34d399;
-  --warning:        #fbbf24;
+  --accent:         #6366f1; /* indigo 500 */
+  --accent-hover:   #4f46e5; /* indigo 600 */
+  --accent-glow:    rgba(99,102,241,0.12);
+  --success:        #10b981;
+  --warning:        #f59e0b;
   --danger:         #ef4444;
-  --info:           #38bdf8;
+  --info:           #0ea5e9;
 
   /* Chat bubbles */
-  --bubble-user:    #2a2e4a;
-  --bubble-ai:      rgba(26, 29, 39, 0.9);
-  --bubble-border:  rgba(255,255,255,0.05);
+  --bubble-user:    #1e1b4b; /* deep indigo */
+  --bubble-ai:      rgba(24, 24, 27, 0.65);
+  --bubble-border:  rgba(255,255,255,0.04);
 
   /* Sidebar */
   --sidebar-width:  280px;
-  --sidebar-bg:     #0f1117;
+  --sidebar-bg:     #050507;
 
   /* Radius + shadows */
   --radius-sm:      6px;
   --radius-md:      12px;
   --radius-lg:      18px;
   --radius-xl:      24px;
-  --shadow-sm:      0 1px 3px rgba(0,0,0,0.3);
-  --shadow-md:      0 4px 16px rgba(0,0,0,0.4);
-  --shadow-lg:      0 8px 32px rgba(0,0,0,0.5);
-  --shadow-glow:    0 0 20px rgba(129,140,248,0.2);
+  --shadow-sm:      0 1px 3px rgba(0,0,0,0.4);
+  --shadow-md:      0 4px 20px rgba(0,0,0,0.6);
+  --shadow-lg:      0 10px 30px rgba(0,0,0,0.7);
+  --shadow-glow:    0 0 25px rgba(99,102,241,0.15);
 
   /* Transitions */
-  --t-fast:  0.15s ease;
-  --t-med:   0.25s ease;
-  --t-slow:  0.4s ease;
+  --t-fast:  0.15s cubic-bezier(0.4, 0, 0.2, 1);
+  --t-med:   0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  --t-slow:  0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 /* ── Reset & Base ───────────────────────────────────────────────── */
@@ -63,7 +65,7 @@ html, body {
   height: 100%;
   background: var(--bg-base);
   color: var(--text-primary);
-  font-family: -apple-system, "Segoe UI", system-ui, "Inter", sans-serif;
+  font-family: 'Outfit', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   font-size: 15px;
   line-height: 1.6;
   overflow: hidden;
@@ -341,7 +343,15 @@ a:hover { color: var(--accent-hover); }
   height: 100%;
   overflow: hidden;
 }
-.panel.active { display: flex; }
+.panel.active {
+  display: flex;
+  animation: panelFadeIn var(--t-med) forwards;
+}
+
+@keyframes panelFadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
 
 .panel-inner {
   flex: 1;
@@ -813,7 +823,7 @@ a:hover { color: var(--accent-hover); }
   backdrop-filter: blur(12px);
   transition: border-color var(--t-fast), box-shadow var(--t-fast);
 }
-.glass-card:hover { border-color: rgba(129,140,248,0.2); }
+.glass-card:hover { border-color: rgba(99, 102, 241, 0.25); box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4); }
 
 .glass-card-header {
   padding: 16px 20px;
@@ -845,8 +855,8 @@ a:hover { color: var(--accent-hover); }
 }
 .score-card:hover {
   transform: translateY(-2px);
-  border-color: rgba(129,140,248,0.3);
-  box-shadow: var(--shadow-md);
+  border-color: rgba(99, 102, 241, 0.35);
+  box-shadow: var(--shadow-glow), var(--shadow-md);
 }
 
 .score-icon {

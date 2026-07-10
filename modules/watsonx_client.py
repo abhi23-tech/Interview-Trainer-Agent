@@ -78,6 +78,7 @@ class WatsonxClient:
         user_message: str,
         history: Optional[List[dict]] = None,
         max_history: int = 6,
+        temperature: Optional[float] = None,
     ) -> str:
         """
         Generate a response using a single API call.
@@ -94,6 +95,7 @@ class WatsonxClient:
             user_message:   Current user message (may include RAG context prefix).
             history:        List of {"role": "user"|"assistant", "content": str}.
             max_history:    Number of recent turns to include (keeps tokens low).
+            temperature:    Optional temperature override for this request.
 
         Returns:
             Generated text string.
@@ -119,8 +121,19 @@ class WatsonxClient:
 
         full_prompt = "".join(prompt_parts)
 
+        # Handle custom generation params override (e.g. temperature)
+        from ibm_watsonx_ai.metanames import GenTextParamsMetaNames as GenParams
+        temp = temperature if temperature is not None else self.temperature
+        params = {
+            GenParams.MAX_NEW_TOKENS: self.max_tokens,
+            GenParams.TEMPERATURE: temp,
+            GenParams.TOP_P: 0.9,
+            GenParams.REPETITION_PENALTY: 1.1,
+            GenParams.STOP_SEQUENCES: ["<|endoftext|>", "<|end_of_turn|>"],
+        }
+
         try:
-            response = self._model.generate_text(prompt=full_prompt)
+            response = self._model.generate_text(prompt=full_prompt, params=params)
             # Strip any trailing special tokens the model may echo
             result = response.strip()
             for stop_token in ["<|end_of_text|>", "<|endoftext|>", "<|end_of_turn|>"]:

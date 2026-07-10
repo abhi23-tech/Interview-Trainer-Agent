@@ -248,7 +248,10 @@ async function sendMessage(text) {
   showTyping(true);
 
   try {
-    const body = { message: text };
+    const body = {
+      message: text,
+      conversation_id: State.activeConversationId
+    };
     if (Object.keys(State.profile).length > 0) {
       body.profile = State.profile;
     }

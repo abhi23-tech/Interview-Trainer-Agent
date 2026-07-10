@@ -100,16 +100,32 @@ def _get_scores() -> dict:
     })
 
 
-def _save_session_record(user_msg: str, ai_msg: str) -> None:
+def _save_session_record(conversation_id: str, user_msg: str, ai_msg: str) -> None:
     """Persist a brief record of the session for the dashboard."""
     records = session.get("session_records", [])
-    records.append({
-        "id": str(uuid.uuid4())[:8],
-        "timestamp": datetime.now().strftime("%Y-%m-%d %H:%M"),
-        "preview": user_msg[:80],
-        "response_preview": ai_msg[:80],
-        "profile": _get_user_profile().get("job_role", "General"),
-    })
+
+    existing_record = None
+    if conversation_id:
+        for r in records:
+            if r.get("conversation_id") == conversation_id:
+                existing_record = r
+                break
+
+    if existing_record:
+        existing_record["timestamp"] = datetime.now().strftime("%Y-%m-%d %H:%M")
+        existing_record["preview"] = user_msg[:80]
+        existing_record["response_preview"] = ai_msg[:80]
+        existing_record["profile"] = _get_user_profile().get("job_role", "General")
+    else:
+        records.append({
+            "id": str(uuid.uuid4())[:8],
+            "conversation_id": conversation_id or str(uuid.uuid4())[:8],
+            "timestamp": datetime.now().strftime("%Y-%m-%d %H:%M"),
+            "preview": user_msg[:80],
+            "response_preview": ai_msg[:80],
+            "profile": _get_user_profile().get("job_role", "General"),
+        })
+
     session["session_records"] = records[-20:]  # keep last 20
 
 
@@ -207,23 +223,62 @@ def chat():
         if rag_block:
             augmented_message = rag_block + "\n\nCandidate question: " + user_message
 
-        # 4. Single Watsonx call
+        # 4. Context-aware parameter selection & Single Watsonx call
+        is_tech = False
+        query_lower = user_message.lower()
+        tech_keywords = ["code", "python", "java", "sql", "javascript", "c++", "c#", "rust", "quicksort", "complexity", "big o", "system design", "database", "scaling", "algorithm", "design"]
+        if any(kw in query_lower for kw in tech_keywords):
+            is_tech = True
+        
+        temperature = 0.1 if is_tech else 0.7
+
         watsonx = _get_watsonx()
         response_text = watsonx.generate(
             system_prompt=system_prompt,
             user_message=augmented_message,
             history=history,
             max_history=MAX_HISTORY,
+            temperature=temperature,
         )
 
-        # 5. Update session history (store clean message, not RAG-augmented)
+        # 5. Extract and parse dynamic assessment from LLM response
+        import re
+        scores = session.get("scores") or {
+            "interview_readiness": 0,
+            "resume_score": 0,
+            "technical_score": 0,
+            "communication_score": 0,
+        }
+
+        assessment_match = re.search(r"\[ASSESSMENT:\s*(\{.*?\})\]", response_text, re.DOTALL)
+        if assessment_match:
+            try:
+                assessment_data = json.loads(assessment_match.group(1))
+                technical = assessment_data.get("technical_score") or assessment_data.get("technical", 0)
+                communication = assessment_data.get("communication_score") or assessment_data.get("communication", 0)
+                resume = assessment_data.get("resume_score") or assessment_data.get("resume", 0)
+                readiness = assessment_data.get("readiness_score") or assessment_data.get("readiness", 0)
+
+                scores["technical_score"] = int(technical)
+                scores["communication_score"] = int(communication)
+                scores["resume_score"] = int(resume)
+                scores["interview_readiness"] = int(readiness)
+            except Exception as e:
+                logger.error(f"Failed to parse LLM assessment tag: {e}")
+
+            # Strip the assessment tag from user-facing text
+            response_text = re.sub(r"\[ASSESSMENT:\s*\{.*?\}\]", "", response_text, flags=re.DOTALL).strip()
+        else:
+            # Fall back to default heuristic scores if tag is not produced
+            scores = _estimate_scores(user_profile, resume_text, history)
+
+        # 6. Update session history (store clean message, not RAG-augmented)
+        conversation_id = data.get("conversation_id")
         history.append({"role": "user", "content": user_message})
         history.append({"role": "assistant", "content": response_text})
         _save_history(history)
-        _save_session_record(user_message, response_text)
+        _save_session_record(conversation_id, user_message, response_text)
 
-        # 6. Update scores
-        scores = _estimate_scores(user_profile, resume_text, history)
         session["scores"] = scores
 
         return jsonify({
