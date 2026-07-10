@@ -1,0 +1,101 @@
+TECHNICAL INTERVIEW QUESTIONS KNOWLEDGE BASE
+============================================
+
+## DATA STRUCTURES & ALGORITHMS
+
+### Arrays and Strings
+Q: What is the time complexity of accessing an element in an array?
+A: O(1) — Arrays provide constant-time random access because elements are stored contiguously in memory. The index directly maps to a memory address using base_address + index × element_size.
+
+Q: Explain the difference between an array and a linked list.
+A: Arrays offer O(1) random access but O(n) insertion/deletion. Linked lists offer O(1) insertion/deletion at head but O(n) random access. Arrays have better cache locality; linked lists have dynamic size. Use arrays when you need fast access; linked lists when you need frequent insertions/deletions.
+
+Q: How would you find duplicate elements in an array?
+A: Multiple approaches: (1) HashSet — O(n) time, O(n) space; iterate and check if element exists before inserting. (2) Sort then scan — O(n log n) time, O(1) space. (3) Bit manipulation for integers in known range.
+
+Q: Reverse a string without built-in functions.
+A: Use two pointers (left=0, right=len-1), swap characters while left < right, increment left and decrement right each step. O(n) time, O(1) extra space if modifying in-place (use char array in Java/C++).
+
+### Trees and Graphs
+Q: What is the difference between BFS and DFS?
+A: BFS (Breadth-First Search) uses a queue, explores level by level, finds shortest path in unweighted graphs. DFS (Depth-First Search) uses a stack (or recursion), explores as deep as possible, used for cycle detection, topological sort, connected components. BFS is better for shortest path; DFS for reachability and backtracking.
+
+Q: What is a Binary Search Tree (BST) and its properties?
+A: A BST is a binary tree where for every node, all keys in the left subtree are less than the node's key and all keys in the right subtree are greater. Operations: search O(h), insert O(h), delete O(h) where h is height. Balanced BST (AVL, Red-Black) guarantees h = O(log n).
+
+Q: Explain tree traversal methods.
+A: Inorder (Left-Root-Right): produces sorted output for BST. Preorder (Root-Left-Right): used for tree copying, prefix expression. Postorder (Left-Right-Root): used for tree deletion, postfix expression. Level-order: BFS traversal, uses queue.
+
+Q: What is a Heap and when would you use it?
+A: A Heap is a complete binary tree satisfying the heap property (max-heap: parent ≥ children; min-heap: parent ≤ children). Use heaps for priority queues, finding kth largest/smallest, heap sort. Operations: insert O(log n), extract-min/max O(log n), build heap O(n).
+
+### Sorting and Searching
+Q: Compare QuickSort, MergeSort, and HeapSort.
+A: QuickSort: avg O(n log n), worst O(n²), in-place, not stable; good cache performance. MergeSort: O(n log n) always, O(n) space, stable; best for linked lists and external sorting. HeapSort: O(n log n) always, in-place, not stable; good when memory is limited.
+
+Q: What is Binary Search and when can it be applied?
+A: Binary Search works on sorted arrays. Compare middle element with target; if equal return; if target < middle search left half; else search right half. Time O(log n). Can be applied to monotonic functions, rotated sorted arrays, finding boundaries.
+
+Q: Explain Dynamic Programming with an example.
+A: DP solves problems by breaking them into overlapping subproblems, storing results to avoid recomputation (memoization/tabulation). Example: Fibonacci — naive recursion O(2^n); DP O(n). Classic DP problems: Knapsack, Longest Common Subsequence, Coin Change, Edit Distance, Matrix Chain Multiplication.
+
+## OBJECT-ORIENTED PROGRAMMING
+
+Q: What are the four pillars of OOP?
+A: (1) Encapsulation — bundling data and methods, hiding internal state via access modifiers. (2) Inheritance — child class inherits properties/methods from parent, enables code reuse. (3) Polymorphism — same interface for different underlying types; method overloading (compile-time) and overriding (runtime). (4) Abstraction — hiding implementation details, exposing only necessary interface via abstract classes/interfaces.
+
+Q: What is the difference between abstract class and interface?
+A: Abstract class: can have abstract and concrete methods, instance variables, constructors, access modifiers; single inheritance. Interface (Java/C#): all methods abstract (until default methods), no instance variables (only constants), multiple implementation allowed. Use abstract class for "is-a" relationship with shared code; interface for "can-do" capabilities.
+
+Q: Explain SOLID principles.
+A: Single Responsibility — class has one reason to change. Open/Closed — open for extension, closed for modification. Liskov Substitution — subtype must be substitutable for its base type. Interface Segregation — clients should not depend on interfaces they don't use. Dependency Inversion — depend on abstractions, not concretions.
+
+Q: What is the Singleton design pattern?
+A: Ensures a class has only one instance and provides a global access point. Implemented via private constructor, static instance variable, public static getInstance() method. Thread-safe version uses double-checked locking or inner static class. Use for logging, configuration, database connection pools.
+
+## DATABASES
+
+Q: What is the difference between SQL and NoSQL databases?
+A: SQL: structured schema, ACID properties, vertical scaling, complex joins, best for relational data (MySQL, PostgreSQL). NoSQL: flexible schema, horizontal scaling, eventual consistency, document/key-value/graph/column stores, best for unstructured/large-scale data (MongoDB, Redis, Cassandra). Choose SQL for complex transactions; NoSQL for speed and scalability with simpler queries.
+
+Q: Explain database normalization.
+A: Process of organizing database to reduce redundancy. 1NF: atomic values, no repeating groups. 2NF: 1NF + no partial dependencies. 3NF: 2NF + no transitive dependencies. BCNF: stronger 3NF. Benefits: reduces data anomalies. Denormalization trades redundancy for read performance.
+
+Q: What are database indexes and how do they work?
+A: Indexes are data structures (B-tree, hash) that speed up data retrieval at cost of additional storage and slower writes. B-tree index supports range queries and sorting. Hash index for equality lookups only. Composite index: multiple columns, most selective column first. Covering index: all query columns in index. Too many indexes slow down INSERT/UPDATE/DELETE.
+
+Q: Explain ACID properties in databases.
+A: Atomicity — transaction either fully completes or fully rolls back. Consistency — transaction brings database from one valid state to another. Isolation — concurrent transactions execute as if sequential. Durability — committed transactions persist even after system failure. Achieved through transaction logs, locks, and write-ahead logging.
+
+## SYSTEM DESIGN CONCEPTS
+
+Q: What is REST API and its principles?
+A: REST (Representational State Transfer): stateless, client-server, cacheable, uniform interface (resource-based URLs, HTTP methods), layered system. HTTP methods: GET (read), POST (create), PUT (replace), PATCH (update), DELETE (remove). Status codes: 200 OK, 201 Created, 400 Bad Request, 401 Unauthorized, 404 Not Found, 500 Internal Server Error.
+
+Q: Explain microservices architecture.
+A: Microservices decompose application into small, independently deployable services each with a single business capability. Benefits: independent scaling, technology diversity, fault isolation, easier deployment. Challenges: network latency, distributed transactions, service discovery, data consistency. Use API gateway, circuit breakers, event-driven communication.
+
+Q: What is caching and what are its strategies?
+A: Caching stores frequently accessed data in fast storage. Strategies: Cache-aside (application loads data on cache miss), Write-through (write to cache and DB simultaneously), Write-back (write to cache, async to DB), Read-through (cache handles DB reads). Cache invalidation strategies: TTL, event-based, LRU eviction. Tools: Redis, Memcached.
+
+## PYTHON-SPECIFIC
+
+Q: What is the GIL in Python?
+A: Global Interpreter Lock — mutex that protects Python objects from concurrent access, allowing only one thread to execute Python bytecode at a time. Impact: Python threads cannot run in parallel on multiple cores for CPU-bound tasks. Solutions: multiprocessing (separate processes), asyncio for I/O-bound tasks, Cython/C extensions. Does NOT affect I/O-bound multithreaded programs.
+
+Q: Explain Python decorators.
+A: Decorators are functions that wrap another function, modifying its behavior without changing its source code. Use @functools.wraps to preserve metadata. Common uses: logging, authentication, caching (@lru_cache), timing, access control. Class decorators can also be used. Example: @app.route in Flask is a decorator.
+
+Q: What are Python generators and when to use them?
+A: Generators use yield to produce a sequence of values lazily, one at a time, saving memory. Generator expressions use () instead of []. Use when: processing large files, infinite sequences, pipeline processing. The yield from statement delegates to a sub-generator. Generators support send(), throw(), close() for coroutines.
+
+## JAVASCRIPT/FRONTEND
+
+Q: Explain the event loop in JavaScript.
+A: JavaScript is single-threaded but handles async operations via event loop. Call stack runs synchronous code. Web APIs handle async operations (setTimeout, fetch). Callback queue receives callbacks. Microtask queue (Promises, queueMicrotask) has higher priority. Event loop continuously checks: if call stack is empty, process microtasks, then process callback queue.
+
+Q: What is the difference between var, let, and const?
+A: var: function-scoped, hoisted with undefined initialization, can be redeclared. let: block-scoped, hoisted but not initialized (TDZ), cannot be redeclared. const: block-scoped, must be initialized, cannot be reassigned (but object properties can mutate). Best practice: prefer const; use let when reassignment needed; avoid var.
+
+Q: Explain React's virtual DOM and reconciliation.
+A: Virtual DOM is a lightweight JavaScript representation of the actual DOM. On state change, React creates a new virtual DOM tree, diffs it against the previous (reconciliation using diffing algorithm), and batches only necessary real DOM updates (commit phase). This minimizes expensive DOM operations. React Fiber is the new reconciliation engine supporting async rendering.

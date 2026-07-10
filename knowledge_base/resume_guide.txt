@@ -1,0 +1,131 @@
+RESUME WRITING AND IMPROVEMENT GUIDE
+=====================================
+
+## RESUME FUNDAMENTALS
+
+### ATS (Applicant Tracking System) Optimization
+Most companies use ATS to filter resumes before human review. To pass ATS:
+- Use standard section headings: Summary, Experience, Education, Skills
+- Avoid tables, graphics, headers/footers for key content
+- Use keywords from the job description (match 60-70% of key terms)
+- Use standard fonts: Arial, Calibri, Times New Roman (10-12pt)
+- Submit as .pdf unless .docx requested
+- Spell out acronyms: "AI (Artificial Intelligence)"
+
+### Contact Information
+Include: Full name (largest text on page), Phone, Professional email, LinkedIn URL, GitHub/Portfolio URL, City + State (no full address needed). Use a professional email (firstname.lastname@gmail.com).
+
+### Professional Summary (3-4 lines)
+Formula: [Role Title] with [X years] experience in [key skills] specialized in [domain]. Proven track record of [major achievement]. Seeking to [contribute/leverage] at [type of company/goal].
+
+Example: "Full-Stack Software Engineer with 4 years of experience building scalable web applications using React, Node.js, and AWS. Reduced API latency by 65% at TechCorp. Passionate about clean code architecture and team mentorship. Seeking senior engineering role at a growth-stage startup."
+
+## EXPERIENCE SECTION
+
+### STAR-Based Bullet Points
+Format: [Action verb] [what you did] [resulting in] [measurable impact]
+Strong: "Redesigned microservices communication layer using gRPC, reducing inter-service latency by 45% and eliminating 3 production incidents per month"
+Weak: "Worked on microservices and helped improve performance"
+
+### Power Action Verbs by Category
+- Built/Developed/Engineered/Designed/Architected — for technical builds
+- Led/Managed/Directed/Spearheaded — for leadership
+- Improved/Optimized/Enhanced/Accelerated — for improvements
+- Reduced/Eliminated/Cut — for cost/time savings
+- Launched/Deployed/Shipped/Released — for deliverables
+- Collaborated/Partnered/Coordinated — for teamwork
+- Mentored/Coached/Trained — for teaching
+- Researched/Analyzed/Investigated — for analytical work
+
+### Quantify Everything
+- Performance: "40% faster", "99.9% uptime", "2x throughput"
+- Scale: "1M+ users", "500K daily requests", "10TB data"
+- Time: "reduced from 3 days to 4 hours"
+- Money: "$200K cost savings", "$2M revenue impact"
+- Team: "led team of 5", "mentored 3 junior developers"
+- Code: "reduced codebase by 30%", "increased test coverage from 40% to 85%"
+
+### Common Resume Mistakes
+- Using "responsible for" instead of action verbs
+- No quantified achievements (everything is vague)
+- Too many irrelevant bullet points (3-5 bullets per role, quality > quantity)
+- Including irrelevant jobs or experience >10 years old
+- Generic skills section without context
+- No GitHub/portfolio link for technical roles
+- Objective statement instead of professional summary
+- Resume longer than 2 pages for <10 years experience
+
+## SKILLS SECTION
+
+### Technical Skills Format
+Organize by category with proficiency level:
+Languages: Python (Expert), JavaScript (Advanced), Java (Intermediate), Go (Beginner)
+Frameworks: React, Node.js, Django, Spring Boot, FastAPI
+Databases: PostgreSQL, MongoDB, Redis, Elasticsearch
+Cloud/DevOps: AWS (EC2, S3, Lambda, RDS), Docker, Kubernetes, Terraform
+Tools: Git, JIRA, Jenkins, Grafana, Datadog
+
+### Skills to Include for Tech Roles (2024)
+- Cloud platforms: AWS, Azure, GCP
+- Containerization: Docker, Kubernetes
+- AI/ML: Python, TensorFlow/PyTorch, LangChain, RAG
+- Frontend: React, TypeScript, Next.js
+- Backend: Node.js, Python (FastAPI/Django), Java Spring
+- Data: SQL, Spark, Airflow, dbt
+- DevOps: CI/CD, Terraform, GitHub Actions
+
+## EDUCATION SECTION
+
+Include: University name, degree, major, graduation year, GPA (if >3.5).
+For experienced professionals: education goes AFTER experience.
+For fresh graduates: education goes BEFORE experience.
+Include relevant coursework, honors, clubs only if within 2 years of graduation.
+
+## PROJECTS SECTION (Critical for juniors and career changers)
+
+Format:
+**[Project Name]** | [Tech Stack Used] | [GitHub link]
+- What the project does (one line)
+- Technical implementation highlights
+- Measurable outcomes (users, performance, scale)
+
+Strong project ideas for software roles:
+- Full-stack web app with authentication, database, APIs
+- ML model with real dataset (Kaggle competitions count)
+- Mobile app (iOS/Android)
+- Open source contribution with merged PRs
+- Browser extension or CLI tool with 50+ GitHub stars
+
+## COVER LETTER FRAMEWORK
+
+Paragraph 1: Hook + why this company specifically (reference product, recent news, mission)
+Paragraph 2: Your strongest relevant achievement (with metrics)
+Paragraph 3: Second achievement showing different dimension
+Paragraph 4: Cultural fit + call to action
+
+Keep to 250-300 words. Customize 30% of content per company. Never just repeat resume.
+
+## LINKEDIN OPTIMIZATION
+
+- Headline: "[Role Title] | [Skill 1] | [Skill 2] | [Value you provide]"
+- About section: 300-500 words, first-person, conversational yet professional
+- Featured section: top project, article, or portfolio
+- Experience section: same bullet points as resume
+- Skills: 50 skills, prioritize technical skills, get endorsements
+- Recommendations: aim for 3-5 quality recommendations
+- Activity: post technical content, share projects, engage with thought leaders
+- Open to Work: visible to recruiters (non-public if employed)
+
+## INTERVIEW READINESS CHECKLIST
+
+Resume Audit (score each 0-10):
+□ ATS-optimized with job description keywords
+□ Clear chronological or functional format
+□ 3-5 quantified bullet points per role
+□ Professional summary targeting specific role
+□ Skills section with proficiency levels
+□ Projects section with GitHub links
+□ Clean formatting, consistent fonts/spacing
+□ No typos or grammatical errors
+□ LinkedIn URL included
+□ Tailored to specific job posting

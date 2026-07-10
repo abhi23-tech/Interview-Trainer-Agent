@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Interview Trainer — AI-Powered by IBM Watsonx</title>
+  <meta name="description" content="AI-powered interview coaching using IBM Granite. Practice technical, HR, and behavioral interviews with personalised feedback." />
+
+  <!-- Bootstrap 5 -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <!-- Bootstrap Icons -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet" />
+  <!-- highlight.js for code blocks -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css" />
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="/static/css/style.css" />
+</head>
+
+<body>
+<!-- ═══════════════════════════════════════════════════════════════════════
+     APP SHELL
+════════════════════════════════════════════════════════════════════════ -->
+<div id="app-shell">
+
+  <!-- ── Left Sidebar ────────────────────────────────────────────────── -->
+  <aside id="sidebar" class="sidebar">
+
+    <!-- Logo / Brand -->
+    <div class="sidebar-header">
+      <div class="brand">
+        <div class="brand-icon">
+          <i class="bi bi-cpu-fill"></i>
+        </div>
+        <div class="brand-text">
+          <span class="brand-name">InterviewAI</span>
+          <span class="brand-sub">Powered by IBM Granite</span>
+        </div>
+      </div>
+      <button class="sidebar-toggle-btn d-lg-none" id="sidebarCloseBtn">
+        <i class="bi bi-x-lg"></i>
+      </button>
+    </div>
+
+    <!-- New Chat -->
+    <button class="new-chat-btn" id="newChatBtn">
+      <i class="bi bi-plus-lg"></i>
+      <span>New Session</span>
+    </button>
+
+    <!-- Navigation -->
+    <nav class="sidebar-nav">
+      <div class="nav-section-label">TOOLS</div>
+      <a href="#" class="nav-item active" id="navChat" data-panel="chat">
+        <i class="bi bi-chat-dots-fill"></i>
+        <span>AI Coach</span>
+      </a>
+      <a href="#" class="nav-item" id="navDashboard" data-panel="dashboard">
+        <i class="bi bi-speedometer2"></i>
+        <span>Dashboard</span>
+        <span class="nav-badge" id="readinessBadge">—</span>
+      </a>
+      <a href="#" class="nav-item" id="navProfile" data-panel="profile">
+        <i class="bi bi-person-badge-fill"></i>
+        <span>My Profile</span>
+      </a>
+      <a href="#" class="nav-item" id="navResume" data-panel="resume">
+        <i class="bi bi-file-earmark-person-fill"></i>
+        <span>Resume Upload</span>
+      </a>
+    </nav>
+
+    <!-- Quick Prompts -->
+    <div class="sidebar-section">
+      <div class="nav-section-label">QUICK PRACTICE</div>
+      <div class="quick-prompts" id="quickPrompts">
+        <button class="quick-prompt-chip" data-prompt="Ask me 5 technical interview questions for a senior software engineer role.">
+          <i class="bi bi-code-slash"></i> Technical Q&A
+        </button>
+        <button class="quick-prompt-chip" data-prompt="Ask me a behavioral interview question using the STAR method format.">
+          <i class="bi bi-person-check"></i> Behavioral STAR
+        </button>
+        <button class="quick-prompt-chip" data-prompt="Give me a coding interview question with hints and then the solution.">
+          <i class="bi bi-terminal-fill"></i> Coding Challenge
+        </button>
+        <button class="quick-prompt-chip" data-prompt="How do I design a URL shortener? Guide me through a system design interview.">
+          <i class="bi bi-diagram-3-fill"></i> System Design
+        </button>
+        <button class="quick-prompt-chip" data-prompt="Review my communication style and give me tips to sound more confident in interviews.">
+          <i class="bi bi-chat-quote-fill"></i> Communication
+        </button>
+        <button class="quick-prompt-chip" data-prompt="Create a 4-week interview preparation roadmap for me.">
+          <i class="bi bi-map-fill"></i> Prep Roadmap
+        </button>
+      </div>
+    </div>
+
+    <!-- Session history -->
+    <div class="sidebar-section flex-grow-1">
+      <div class="nav-section-label">RECENT SESSIONS</div>
+      <div id="sessionList" class="session-list">
+        <div class="session-empty">
+          <i class="bi bi-clock-history"></i>
+          <span>No sessions yet</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Sidebar footer -->
+    <div class="sidebar-footer">
+      <div class="model-badge">
+        <i class="bi bi-lightning-charge-fill text-warning"></i>
+        <span>IBM Granite 3.3</span>
+      </div>
+    </div>
+  </aside>
+
+  <!-- ── Main Content ─────────────────────────────────────────────────── -->
+  <main id="main-content">
+
+    <!-- Mobile top bar -->
+    <div class="mobile-topbar d-lg-none">
+      <button class="sidebar-toggle-btn" id="sidebarOpenBtn">
+        <i class="bi bi-list"></i>
+      </button>
+      <span class="mobile-title">InterviewAI</span>
+      <button class="icon-btn" id="mobileClearBtn" title="Clear chat">
+        <i class="bi bi-trash3"></i>
+      </button>
+    </div>
+
+    <!-- ── PANEL: Chat ─────────────────────────────────────────────── -->
+    <div id="panel-chat" class="panel active">
+
+      <!-- Chat top bar -->
+      <div class="chat-topbar">
+        <div class="chat-title-area">
+          <div class="chat-avatar">
+            <i class="bi bi-cpu-fill"></i>
+          </div>
+          <div>
+            <div class="chat-agent-name">Alex — Interview Coach</div>
+            <div class="chat-agent-status">
+              <span class="status-dot"></span>
+              <span id="agentStatus">Ready to coach</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Chat messages -->
+      <div class="chat-messages" id="chatMessages">
+        <!-- Welcome message -->
+        <div class="message-row assistant">
+          <div class="message-avatar">
+            <i class="bi bi-cpu-fill"></i>
+          </div>
+          <div class="message-bubble assistant-bubble">
+            <div class="message-content" id="welcomeMessage">
+              <p>👋 Hi! I'm <strong>Alex</strong>, your AI-powered interview coach, built on <strong>IBM Granite</strong>.</p>
+              <p>I can help you with:</p>
+              <ul>
+                <li>🎯 <strong>Technical questions</strong> — DSA, system design, coding</li>
+                <li>🤝 <strong>HR & behavioral</strong> — STAR-format coaching</li>
+                <li>🏢 <strong>Company-specific</strong> — Google, Amazon, Microsoft & more</li>
+                <li>📄 <strong>Resume review</strong> — actionable improvements</li>
+                <li>📊 <strong>Readiness scoring</strong> — know where you stand</li>
+              </ul>
+              <p>To get started, tell me: <strong>What role are you interviewing for?</strong></p>
+              <p><em>Or use the quick prompts on the left to jump right in! 🚀</em></p>
+            </div>
+            <div class="message-meta">
+              <span class="message-time">Just now</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Typing indicator (hidden by default) -->
+      <div class="typing-indicator" id="typingIndicator" style="display:none;">
+        <div class="message-row assistant">
+          <div class="message-avatar">
+            <i class="bi bi-cpu-fill"></i>
+          </div>
+          <div class="typing-bubble">
+            <div class="typing-dots">
+              <span></span><span></span><span></span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Input area -->
+      <div class="chat-input-area">
+        <div class="input-container">
+          <textarea
+            id="chatInput"
+            class="chat-textarea"
+            placeholder="Ask anything — technical questions, behavioral coaching, resume review…"
+            rows="1"
+            maxlength="2000"
+          ></textarea>
+          <div class="input-actions">
+            <span class="char-counter" id="charCounter">0/2000</span>
+            <button class="send-btn" id="sendBtn" disabled title="Send message">
+              <i class="bi bi-send-fill"></i>
+            </button>
+          </div>
+        </div>
+        <p class="input-hint">
+          <i class="bi bi-shield-check text-success"></i>
+          Powered by IBM Watsonx.ai with RAG retrieval — answers grounded in verified interview knowledge.
+          <kbd>Shift+Enter</kbd> for new line.
+        </p>
+      </div>
+    </div>
+
+    <!-- ── PANEL: Dashboard ────────────────────────────────────────── -->
+    <div id="panel-dashboard" class="panel">
+      <div class="panel-inner">
+        <div class="panel-header">
+          <h2 class="panel-title">
+            <i class="bi bi-speedometer2"></i> Interview Dashboard
+          </h2>
+          <p class="panel-subtitle">Track your readiness scores and preparation progress</p>
+        </div>
+
+        <!-- Score cards row -->
+        <div class="row g-3 mb-4">
+          <div class="col-6 col-lg-3">
+            <div class="score-card" id="cardReadiness">
+              <div class="score-icon" style="background: rgba(99,102,241,0.15);">
+                <i class="bi bi-trophy-fill" style="color:#818cf8;"></i>
+              </div>
+              <div class="score-label">Interview Readiness</div>
+              <div class="score-ring-wrap">
+                <svg viewBox="0 0 60 60" class="score-ring">
+                  <circle cx="30" cy="30" r="24" class="ring-bg"/>
+                  <circle cx="30" cy="30" r="24" class="ring-fill" id="ringReadiness"
+                    style="stroke:#818cf8;" stroke-dasharray="0 151"/>
+                </svg>
+                <span class="score-value" id="scoreReadiness">0%</span>
+              </div>
+            </div>
+          </div>
+          <div class="col-6 col-lg-3">
+            <div class="score-card" id="cardResume">
+              <div class="score-icon" style="background: rgba(16,185,129,0.15);">
+                <i class="bi bi-file-earmark-check-fill" style="color:#34d399;"></i>
+              </div>
+              <div class="score-label">Resume Score</div>
+              <div class="score-ring-wrap">
+                <svg viewBox="0 0 60 60" class="score-ring">
+                  <circle cx="30" cy="30" r="24" class="ring-bg"/>
+                  <circle cx="30" cy="30" r="24" class="ring-fill" id="ringResume"
+                    style="stroke:#34d399;" stroke-dasharray="0 151"/>
+                </svg>
+                <span class="score-value" id="scoreResume">0%</span>
+              </div>
+            </div>
+          </div>
+          <div class="col-6 col-lg-3">
+            <div class="score-card" id="cardTechnical">
+              <div class="score-icon" style="background: rgba(245,158,11,0.15);">
+                <i class="bi bi-code-slash" style="color:#fbbf24;"></i>
+              </div>
+              <div class="score-label">Technical Skills</div>
+              <div class="score-ring-wrap">
+                <svg viewBox="0 0 60 60" class="score-ring">
+                  <circle cx="30" cy="30" r="24" class="ring-bg"/>
+                  <circle cx="30" cy="30" r="24" class="ring-fill" id="ringTechnical"
+                    style="stroke:#fbbf24;" stroke-dasharray="0 151"/>
+                </svg>
+                <span class="score-value" id="scoreTechnical">0%</span>
+              </div>
+            </div>
+          </div>
+          <div class="col-6 col-lg-3">
+            <div class="score-card" id="cardCommunication">
+              <div class="score-icon" style="background: rgba(236,72,153,0.15);">
+                <i class="bi bi-chat-heart-fill" style="color:#f472b6;"></i>
+              </div>
+              <div class="score-label">Communication</div>
+              <div class="score-ring-wrap">
+                <svg viewBox="0 0 60 60" class="score-ring">
+                  <circle cx="30" cy="30" r="24" class="ring-bg"/>
+                  <circle cx="30" cy="30" r="24" class="ring-fill" id="ringCommunication"
+                    style="stroke:#f472b6;" stroke-dasharray="0 151"/>
+                </svg>
+                <span class="score-value" id="scoreCommunication">0%</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Stats row -->
+        <div class="row g-3 mb-4">
+          <div class="col-md-4">
+            <div class="stat-card">
+              <i class="bi bi-chat-dots-fill stat-icon" style="color:#818cf8;"></i>
+              <div>
+                <div class="stat-value" id="statMessages">0</div>
+                <div class="stat-label">Questions Practiced</div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="stat-card">
+              <i class="bi bi-file-earmark-person-fill stat-icon" style="color:#34d399;"></i>
+              <div>
+                <div class="stat-value" id="statResume">Not uploaded</div>
+                <div class="stat-label">Resume Status</div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="stat-card">
+              <i class="bi bi-building stat-icon" style="color:#fbbf24;"></i>
+              <div>
+                <div class="stat-value" id="statCompany">—</div>
+                <div class="stat-label">Target Company</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Recent sessions table -->
+        <div class="glass-card">
+          <div class="glass-card-header">
+            <h5 class="mb-0"><i class="bi bi-clock-history"></i> Recent Sessions</h5>
+          </div>
+          <div id="sessionsTable">
+            <div class="empty-state">
+              <i class="bi bi-chat-square-dots empty-icon"></i>
+              <p>Start a chat session to see your history here.</p>
+              <button class="btn-primary-custom" onclick="switchPanel('chat')">
+                <i class="bi bi-chat-dots-fill"></i> Start Practicing
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── PANEL: Profile ──────────────────────────────────────────── -->
+    <div id="panel-profile" class="panel">
+      <div class="panel-inner">
+        <div class="panel-header">
+          <h2 class="panel-title"><i class="bi bi-person-badge-fill"></i> My Profile</h2>
+          <p class="panel-subtitle">Set your preferences to personalise interview coaching</p>
+        </div>
+
+        <div class="row g-4">
+          <div class="col-lg-8">
+            <div class="glass-card">
+              <div class="glass-card-header">
+                <h5 class="mb-0"><i class="bi bi-sliders"></i> Interview Configuration</h5>
+              </div>
+              <div class="glass-card-body">
+                <form id="profileForm">
+                  <div class="row g-3">
+                    <div class="col-md-6">
+                      <label class="form-label-custom">Job Role / Title</label>
+                      <input type="text" class="input-custom" id="profileRole"
+                        placeholder="e.g. Senior Software Engineer" />
+                    </div>
+                    <div class="col-md-6">
+                      <label class="form-label-custom">Experience Level</label>
+                      <select class="input-custom" id="profileExperience">
+                        <option value="">Select level…</option>
+                        <option value="Fresher / Entry Level (0-1 years)">Fresher / Entry Level (0-1 yrs)</option>
+                        <option value="Junior (1-3 years)">Junior (1-3 yrs)</option>
+                        <option value="Mid-level (3-5 years)">Mid-level (3-5 yrs)</option>
+                        <option value="Senior (5-8 years)">Senior (5-8 yrs)</option>
+                        <option value="Staff / Principal (8+ years)">Staff / Principal (8+ yrs)</option>
+                      </select>
+                    </div>
+                    <div class="col-md-6">
+                      <label class="form-label-custom">Target Company</label>
+                      <select class="input-custom" id="profileCompany">
+                        <option value="">Any company</option>
+                        <option value="Google">Google</option>
+                        <option value="Amazon">Amazon</option>
+                        <option value="Microsoft">Microsoft</option>
+                        <option value="Meta">Meta (Facebook)</option>
+                        <option value="Apple">Apple</option>
+                        <option value="IBM">IBM</option>
+                        <option value="Netflix">Netflix</option>
+                        <option value="Startup">Startup</option>
+                        <option value="Other">Other</option>
+                      </select>
+                    </div>
+                    <div class="col-md-6">
+                      <label class="form-label-custom">Industry</label>
+                      <select class="input-custom" id="profileIndustry">
+                        <option value="Software Engineering">Software Engineering</option>
+                        <option value="Data Science / ML">Data Science / ML</option>
+                        <option value="Product Management">Product Management</option>
+                        <option value="DevOps / Cloud">DevOps / Cloud</option>
+                        <option value="Cybersecurity">Cybersecurity</option>
+                        <option value="Finance / Fintech">Finance / Fintech</option>
+                        <option value="Other">Other</option>
+                      </select>
+                    </div>
+                    <div class="col-12">
+                      <label class="form-label-custom">Key Skills (comma-separated)</label>
+                      <input type="text" class="input-custom" id="profileSkills"
+                        placeholder="e.g. Python, React, AWS, System Design, Docker" />
+                    </div>
+                  </div>
+                  <div class="mt-4 d-flex gap-2">
+                    <button type="submit" class="btn-primary-custom">
+                      <i class="bi bi-check2-circle"></i> Save Profile
+                    </button>
+                    <button type="button" class="btn-secondary-custom" id="startWithProfileBtn">
+                      <i class="bi bi-chat-dots-fill"></i> Start Coaching
+                    </button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-4">
+            <div class="glass-card">
+              <div class="glass-card-header">
+                <h5 class="mb-0"><i class="bi bi-info-circle"></i> Tips</h5>
+              </div>
+              <div class="glass-card-body">
+                <div class="tip-item">
+                  <i class="bi bi-1-circle-fill tip-icon" style="color:#818cf8;"></i>
+                  <span>Fill your profile for <strong>personalised</strong> questions</span>
+                </div>
+                <div class="tip-item">
+                  <i class="bi bi-2-circle-fill tip-icon" style="color:#34d399;"></i>
+                  <span>Upload your resume for <strong>targeted feedback</strong></span>
+                </div>
+                <div class="tip-item">
+                  <i class="bi bi-3-circle-fill tip-icon" style="color:#fbbf24;"></i>
+                  <span>Select a target company for <strong>company-specific</strong> prep</span>
+                </div>
+                <div class="tip-item">
+                  <i class="bi bi-4-circle-fill tip-icon" style="color:#f472b6;"></i>
+                  <span>Practice daily to see your <strong>scores improve</strong></span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── PANEL: Resume Upload ────────────────────────────────────── -->
+    <div id="panel-resume" class="panel">
+      <div class="panel-inner">
+        <div class="panel-header">
+          <h2 class="panel-title"><i class="bi bi-file-earmark-person-fill"></i> Resume Upload</h2>
+          <p class="panel-subtitle">Upload your resume for AI-powered review and personalised interview coaching</p>
+        </div>
+
+        <div class="row g-4">
+          <div class="col-lg-7">
+            <div class="glass-card">
+              <div class="glass-card-header">
+                <h5 class="mb-0"><i class="bi bi-upload"></i> Upload Resume</h5>
+              </div>
+              <div class="glass-card-body">
+                <!-- Drop zone -->
+                <div class="drop-zone" id="dropZone">
+                  <input type="file" id="resumeFile" accept=".pdf,.docx,.doc,.txt"
+                    class="d-none" />
+                  <div class="drop-zone-content" id="dropContent">
+                    <i class="bi bi-cloud-upload-fill drop-icon"></i>
+                    <p class="drop-title">Drag & drop your resume here</p>
+                    <p class="drop-subtitle">or</p>
+                    <button class="btn-primary-custom" onclick="document.getElementById('resumeFile').click()">
+                      <i class="bi bi-folder2-open"></i> Browse Files
+                    </button>
+                    <p class="drop-hint">PDF, DOCX, DOC, or TXT · Max 10 MB</p>
+                  </div>
+                  <!-- Upload progress (hidden) -->
+                  <div id="uploadProgress" style="display:none;">
+                    <i class="bi bi-hourglass-split drop-icon spin"></i>
+                    <p class="drop-title">Parsing resume…</p>
+                    <div class="upload-bar-wrap">
+                      <div class="upload-bar" id="uploadBar"></div>
+                    </div>
+                  </div>
+                  <!-- Upload result (hidden) -->
+                  <div id="uploadResult" style="display:none;">
+                    <i class="bi bi-check-circle-fill drop-icon" style="color:#34d399;"></i>
+                    <p class="drop-title" id="uploadResultTitle">Resume loaded!</p>
+                    <p class="drop-subtitle" id="uploadResultMsg"></p>
+                    <button class="btn-secondary-custom mt-2" id="uploadAnotherBtn">
+                      <i class="bi bi-arrow-repeat"></i> Upload Another
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-5">
+            <div class="glass-card">
+              <div class="glass-card-header">
+                <h5 class="mb-0"><i class="bi bi-stars"></i> What Alex will analyse</h5>
+              </div>
+              <div class="glass-card-body">
+                <div class="analysis-item">
+                  <i class="bi bi-check2-circle" style="color:#34d399;"></i>
+                  ATS keyword optimisation
+                </div>
+                <div class="analysis-item">
+                  <i class="bi bi-check2-circle" style="color:#34d399;"></i>
+                  Quantified achievement detection
+                </div>
+                <div class="analysis-item">
+                  <i class="bi bi-check2-circle" style="color:#34d399;"></i>
+                  Technical skills gap analysis
+                </div>
+                <div class="analysis-item">
+                  <i class="bi bi-check2-circle" style="color:#34d399;"></i>
+                  Action verb strength scoring
+                </div>
+                <div class="analysis-item">
+                  <i class="bi bi-check2-circle" style="color:#34d399;"></i>
+                  Interview question prediction
+                </div>
+                <div class="analysis-item">
+                  <i class="bi bi-check2-circle" style="color:#34d399;"></i>
+                  Personalised improvement roadmap
+                </div>
+                <div class="detected-skills mt-3" id="detectedSkillsWrap" style="display:none;">
+                  <div class="form-label-custom mb-2">Detected Skills:</div>
+                  <div id="detectedSkillsList"></div>
+                </div>
+              </div>
+            </div>
+
+            <div class="glass-card mt-3">
+              <div class="glass-card-body">
+                <div class="form-label-custom mb-2">Or, describe your experience:</div>
+                <textarea class="input-custom" id="manualResumeText" rows="4"
+                  placeholder="Paste your resume text or describe your experience here…"></textarea>
+                <button class="btn-primary-custom w-100 mt-2" id="submitManualResume">
+                  <i class="bi bi-send-fill"></i> Submit Text
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </main><!-- /main-content -->
+</div><!-- /app-shell -->
+
+<!-- ── Toast notification ────────────────────────────────────────────────── -->
+<div id="toastContainer" class="toast-container">
+  <div id="appToast" class="app-toast" role="alert">
+    <div class="toast-icon" id="toastIcon"><i class="bi bi-check-circle-fill"></i></div>
+    <div class="toast-body" id="toastBody">Message</div>
+    <button class="toast-close" onclick="hideToast()"><i class="bi bi-x"></i></button>
+  </div>
+</div>
+
+<!-- ── Modal: Confirm Clear ─────────────────────────────────────────────── -->
+<div class="modal fade" id="clearModal" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered modal-sm">
+    <div class="modal-content glass-modal">
+      <div class="modal-body text-center p-4">
+        <i class="bi bi-trash3-fill mb-3" style="font-size:2rem;color:#ef4444;display:block;"></i>
+        <h5 class="mb-2">Clear Conversation?</h5>
+        <p class="text-muted small mb-4">This will erase the current chat history. Your profile and resume will be kept.</p>
+        <div class="d-flex gap-2 justify-content-center">
+          <button class="btn-secondary-custom" data-bs-dismiss="modal">Cancel</button>
+          <button class="btn btn-danger btn-sm" id="confirmClearBtn">Clear</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── Scripts ──────────────────────────────────────────────────────────── -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+<script src="/static/js/app.js"></script>
+</body>
+</html>

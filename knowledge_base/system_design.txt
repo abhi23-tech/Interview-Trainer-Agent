@@ -1,0 +1,125 @@
+SYSTEM DESIGN AND ARCHITECTURE INTERVIEW GUIDE
+===============================================
+
+## SYSTEM DESIGN FRAMEWORK (STAR-D Method)
+
+### Step 1: Requirements Clarification (5 min)
+Functional requirements: What features must the system support?
+Non-functional requirements: Scale (users, requests/sec), latency (SLA), availability (99.9%?), consistency, durability, security
+Ask: Read-heavy or write-heavy? Real-time or batch? Mobile-first? Multi-region?
+
+### Step 2: Capacity Estimation (3 min)
+Users: DAU (Daily Active Users) × actions per day = requests/day
+Storage: data size per item × items/day × retention period
+Bandwidth: requests/sec × data size per request
+Memory (cache): hot data = 20% of daily data (80/20 rule)
+Example: Twitter — 300M DAU, 200 tweets/day = 600M tweets/day = 7000 tweets/sec
+
+### Step 3: High-Level Design (10 min)
+Draw client → load balancer → app servers → databases → cache
+Identify core APIs: REST endpoints with request/response
+Identify core data models: tables/documents with key fields
+Single data flow diagram connecting all components
+
+### Step 4: Deep Dive (20 min)
+Focus on the most complex/critical components
+Database schema design
+Caching strategy (what to cache, eviction policy, TTL)
+Message queue integration for async operations
+CDN for static assets and global distribution
+Authentication and authorization design
+
+### Step 5: Scale and Optimize (7 min)
+Identify bottlenecks in your design
+Database: read replicas, sharding strategy, connection pooling
+Application: horizontal scaling, stateless design
+Caching: Redis cluster, cache-aside vs write-through
+Message queues: Kafka for high-throughput, RabbitMQ for task queues
+
+## CORE DESIGN PATTERNS
+
+### URL Shortener (TinyURL/Bit.ly)
+Core components: API service, ID generator, database, redirect service
+Key decision: ID generation — random vs sequential, Base62 encoding
+Database: Key-value store (Redis + Cassandra) — URL:shortcode mapping
+Scale: 100M URLs, 10B redirects/day = ~115K req/sec reads
+Caching: Cache top 20% URLs (80% of traffic), TTL based
+Special considerations: custom URLs, analytics, expiration
+
+### Twitter/Social Feed Design
+Core: User service, Tweet service, Timeline service, Fanout service
+Timeline: Pull model (read on request) vs Push model (write on post)
+Hybrid: Push for users with <1M followers; Pull for celebrities (Lady Gaga problem)
+Database: Users/Tweets in MySQL (sharded); Timeline in Redis (sorted set)
+Media: CDN (CloudFront) + Object storage (S3)
+Search: Elasticsearch for tweet search
+
+### Netflix/Video Streaming
+Upload pipeline: Video upload → Transcoding service → Multiple quality levels (360p-4K) → CDN
+Adaptive bitrate streaming (ABR): client switches quality based on bandwidth
+CDN: Pre-push popular content to edge servers before users request
+Database: Metadata in Cassandra; User activity in Kafka → Spark processing
+Recommendation: Offline ML model, real-time serving
+
+### Uber/Ride Sharing
+Core services: Location service, Matching service, Pricing service, Trip service
+Location updates: Drivers send GPS every 4 seconds → WebSocket → geospatial DB
+Driver matching: QuadTree or S2 geometry for nearby driver lookup
+Surge pricing: supply/demand ratio within geographic zones
+Database: RDBMS for trips; Redis for live driver locations
+
+### WhatsApp/Messaging
+One-to-one: Direct WebSocket connection per user; messages stored until delivered
+Group messaging: Fanout to all members via message queue
+Presence: Online/offline status with heartbeat mechanism
+End-to-end encryption: Signal Protocol — sender encrypts with recipient's public key
+Media: Upload to S3, share URL in message
+Scale: 100B messages/day = 1.16M messages/second
+
+## KEY DISTRIBUTED SYSTEM CONCEPTS
+
+### CAP Theorem
+A distributed system can guarantee only 2 of 3: Consistency, Availability, Partition Tolerance.
+Since network partitions are inevitable, choose CP or AP:
+CP (consistent): Zookeeper, HBase, etcd — banking systems
+AP (available): Cassandra, DynamoDB, CouchDB — social media, shopping carts
+
+### Consistency Patterns
+Strong Consistency: all reads see latest write (expensive, synchronous replication)
+Eventual Consistency: reads may see stale data temporarily (scalable, async replication)
+Read-your-own-write: user always sees their own writes immediately
+Causal Consistency: operations causally related maintain order
+
+### Database Sharding Strategies
+Horizontal sharding: partition rows across multiple DB servers
+- Range-based: users A-M on shard 1, N-Z on shard 2 (hot spots risk)
+- Hash-based: hash(user_id) % num_shards (even distribution, hard to rebalance)
+- Directory-based: lookup table maps key to shard (flexible, single point of failure)
+Consistent hashing: add/remove nodes with minimal data movement (Cassandra, Chord)
+
+### Message Queue Use Cases
+Async processing: email sending, push notifications, report generation
+Peak load buffering: Black Friday sale order processing
+Event streaming: Kafka for event log, analytics pipelines
+Microservices decoupling: services communicate via events, not direct calls
+
+### Load Balancing Algorithms
+Round Robin: distribute requests equally (stateless services)
+Least Connections: route to server with fewest active connections
+IP Hash: same client IP → same server (session persistence)
+Weighted: servers with more capacity get proportionally more requests
+Health checks: automatically remove unhealthy servers from pool
+
+## ESTIMATION NUMBERS TO MEMORIZE
+1 million seconds = 11.5 days
+10 million seconds = 115 days
+1 billion = 10^9
+1 trillion = 10^12
+Twitter: 500M tweets/day
+Google: 8.5B searches/day
+WhatsApp: 100B messages/day
+Netflix: 700K hours of video/minute
+Instagram: 100M photos uploaded/day
+SSD: 500MB/s read, 200MB/s write
+Memory: 10GB/s bandwidth
+Network: 1-10 Gbps typical data center link

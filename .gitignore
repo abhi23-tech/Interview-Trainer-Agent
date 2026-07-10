@@ -1,0 +1,25 @@
+# Environments
+.env
+.venv/
+env/
+venv/
+ENV/
+
+# Python Cache
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Vector DB & Temp upload folders
+vector_db/
+uploads/
+*.pdf
+*.docx
+*.doc
+
+# IDEs & System Files
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db

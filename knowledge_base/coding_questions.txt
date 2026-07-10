@@ -1,0 +1,292 @@
+CODING INTERVIEW QUESTIONS AND SOLUTIONS
+=========================================
+
+## ARRAY PROBLEMS
+
+### Two Sum (LeetCode #1) — Easy
+Problem: Given array nums and target, return indices of two numbers that add to target.
+```python
+def twoSum(nums, target):
+    seen = {}  # value -> index
+    for i, num in enumerate(nums):
+        complement = target - num
+        if complement in seen:
+            return [seen[complement], i]
+        seen[num] = i
+    return []
+```
+Time: O(n) | Space: O(n)
+Key insight: Use hash map to store complement lookups.
+
+### Maximum Subarray (Kadane's Algorithm) — Medium
+Problem: Find contiguous subarray with largest sum.
+```python
+def maxSubArray(nums):
+    max_sum = current_sum = nums[0]
+    for num in nums[1:]:
+        current_sum = max(num, current_sum + num)
+        max_sum = max(max_sum, current_sum)
+    return max_sum
+```
+Time: O(n) | Space: O(1)
+Key insight: At each element, decide to extend existing subarray or start fresh.
+
+### Container With Most Water — Medium
+Problem: Two pointers technique.
+```python
+def maxArea(height):
+    left, right = 0, len(height) - 1
+    max_water = 0
+    while left < right:
+        water = min(height[left], height[right]) * (right - left)
+        max_water = max(max_water, water)
+        if height[left] < height[right]:
+            left += 1
+        else:
+            right -= 1
+    return max_water
+```
+Time: O(n) | Space: O(1)
+
+## LINKED LIST PROBLEMS
+
+### Reverse Linked List — Easy
+```python
+def reverseList(head):
+    prev = None
+    current = head
+    while current:
+        next_node = current.next
+        current.next = prev
+        prev = current
+        current = next_node
+    return prev
+```
+Time: O(n) | Space: O(1)
+
+### Detect Cycle in Linked List (Floyd's Algorithm) — Medium
+```python
+def hasCycle(head):
+    slow = fast = head
+    while fast and fast.next:
+        slow = slow.next
+        fast = fast.next.next
+        if slow == fast:
+            return True
+    return False
+```
+Time: O(n) | Space: O(1) — tortoise and hare pattern
+
+### Merge Two Sorted Lists — Easy
+```python
+def mergeTwoLists(l1, l2):
+    dummy = ListNode(0)
+    current = dummy
+    while l1 and l2:
+        if l1.val <= l2.val:
+            current.next = l1
+            l1 = l1.next
+        else:
+            current.next = l2
+            l2 = l2.next
+        current = current.next
+    current.next = l1 or l2
+    return dummy.next
+```
+Time: O(m+n) | Space: O(1)
+
+## TREE PROBLEMS
+
+### Maximum Depth of Binary Tree — Easy
+```python
+def maxDepth(root):
+    if not root:
+        return 0
+    return 1 + max(maxDepth(root.left), maxDepth(root.right))
+```
+Time: O(n) | Space: O(h) where h is height
+
+### Validate Binary Search Tree — Medium
+```python
+def isValidBST(root, min_val=float('-inf'), max_val=float('inf')):
+    if not root:
+        return True
+    if root.val <= min_val or root.val >= max_val:
+        return False
+    return (isValidBST(root.left, min_val, root.val) and
+            isValidBST(root.right, root.val, max_val))
+```
+Time: O(n) | Space: O(h)
+
+### Level Order Traversal — Medium
+```python
+from collections import deque
+def levelOrder(root):
+    if not root:
+        return []
+    result = []
+    queue = deque([root])
+    while queue:
+        level = []
+        for _ in range(len(queue)):
+            node = queue.popleft()
+            level.append(node.val)
+            if node.left: queue.append(node.left)
+            if node.right: queue.append(node.right)
+        result.append(level)
+    return result
+```
+Time: O(n) | Space: O(n)
+
+## DYNAMIC PROGRAMMING
+
+### Climbing Stairs — Easy (Fibonacci variant)
+```python
+def climbStairs(n):
+    if n <= 2:
+        return n
+    dp = [0] * (n + 1)
+    dp[1], dp[2] = 1, 2
+    for i in range(3, n + 1):
+        dp[i] = dp[i-1] + dp[i-2]
+    return dp[n]
+```
+Time: O(n) | Space: O(n) — optimize to O(1) with two variables
+
+### Longest Common Subsequence — Medium
+```python
+def longestCommonSubsequence(text1, text2):
+    m, n = len(text1), len(text2)
+    dp = [[0] * (n + 1) for _ in range(m + 1)]
+    for i in range(1, m + 1):
+        for j in range(1, n + 1):
+            if text1[i-1] == text2[j-1]:
+                dp[i][j] = dp[i-1][j-1] + 1
+            else:
+                dp[i][j] = max(dp[i-1][j], dp[i][j-1])
+    return dp[m][n]
+```
+Time: O(m*n) | Space: O(m*n)
+
+### 0/1 Knapsack Problem — Medium
+```python
+def knapsack(weights, values, capacity):
+    n = len(weights)
+    dp = [[0] * (capacity + 1) for _ in range(n + 1)]
+    for i in range(1, n + 1):
+        for w in range(capacity + 1):
+            dp[i][w] = dp[i-1][w]  # don't include item i
+            if weights[i-1] <= w:
+                dp[i][w] = max(dp[i][w], dp[i-1][w-weights[i-1]] + values[i-1])
+    return dp[n][capacity]
+```
+Time: O(n*W) | Space: O(n*W) — optimize to O(W)
+
+## GRAPH PROBLEMS
+
+### Number of Islands (BFS/DFS) — Medium
+```python
+def numIslands(grid):
+    if not grid:
+        return 0
+    count = 0
+    rows, cols = len(grid), len(grid[0])
+    
+    def dfs(r, c):
+        if r < 0 or r >= rows or c < 0 or c >= cols or grid[r][c] != '1':
+            return
+        grid[r][c] = '0'  # mark visited
+        dfs(r+1, c); dfs(r-1, c)
+        dfs(r, c+1); dfs(r, c-1)
+    
+    for r in range(rows):
+        for c in range(cols):
+            if grid[r][c] == '1':
+                dfs(r, c)
+                count += 1
+    return count
+```
+Time: O(m*n) | Space: O(m*n) for recursion stack
+
+### Course Schedule (Topological Sort / Cycle Detection) — Medium
+```python
+def canFinish(numCourses, prerequisites):
+    graph = [[] for _ in range(numCourses)]
+    for a, b in prerequisites:
+        graph[b].append(a)
+    
+    # 0: unvisited, 1: visiting, 2: visited
+    state = [0] * numCourses
+    
+    def has_cycle(node):
+        if state[node] == 1: return True
+        if state[node] == 2: return False
+        state[node] = 1
+        for neighbor in graph[node]:
+            if has_cycle(neighbor): return True
+        state[node] = 2
+        return False
+    
+    return not any(has_cycle(i) for i in range(numCourses))
+```
+Time: O(V+E) | Space: O(V+E)
+
+## STRING MANIPULATION
+
+### Valid Anagram — Easy
+```python
+def isAnagram(s, t):
+    if len(s) != len(t):
+        return False
+    from collections import Counter
+    return Counter(s) == Counter(t)
+    # O(n) time, O(1) space (26 chars)
+```
+
+### Longest Substring Without Repeating Characters — Medium
+```python
+def lengthOfLongestSubstring(s):
+    char_index = {}
+    max_len = left = 0
+    for right, char in enumerate(s):
+        if char in char_index and char_index[char] >= left:
+            left = char_index[char] + 1
+        char_index[char] = right
+        max_len = max(max_len, right - left + 1)
+    return max_len
+```
+Time: O(n) | Space: O(min(m,n)) where m is charset size
+
+## SYSTEM DESIGN CODING PATTERNS
+
+### LRU Cache Implementation — Medium
+```python
+from collections import OrderedDict
+class LRUCache:
+    def __init__(self, capacity):
+        self.capacity = capacity
+        self.cache = OrderedDict()
+    
+    def get(self, key):
+        if key not in self.cache:
+            return -1
+        self.cache.move_to_end(key)
+        return self.cache[key]
+    
+    def put(self, key, value):
+        if key in self.cache:
+            self.cache.move_to_end(key)
+        self.cache[key] = value
+        if len(self.cache) > self.capacity:
+            self.cache.popitem(last=False)
+```
+Time: O(1) for both operations | Space: O(capacity)
+
+## COMPLEXITY CHEAT SHEET
+- O(1): Hash map lookup, array access, stack push/pop
+- O(log n): Binary search, balanced BST operations
+- O(n): Linear scan, single pass
+- O(n log n): Efficient sorting (merge sort, heap sort)
+- O(n²): Nested loops, bubble/insertion/selection sort
+- O(2^n): Brute-force subsets, recursive fibonacci
+- O(n!): Permutation generation

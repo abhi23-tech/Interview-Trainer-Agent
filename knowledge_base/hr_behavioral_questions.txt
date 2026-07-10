@@ -1,0 +1,88 @@
+HR AND BEHAVIORAL INTERVIEW QUESTIONS KNOWLEDGE BASE
+=====================================================
+
+## STAR METHOD FRAMEWORK
+The STAR method structures behavioral answers:
+- Situation: Set the context and background
+- Task: Describe your responsibility or challenge
+- Action: Explain what YOU specifically did (use "I", not "we")
+- Result: Share measurable outcomes and learnings
+
+## COMMON HR INTERVIEW QUESTIONS
+
+### Self-Introduction
+Q: Tell me about yourself.
+A: Structure: Present (current role/skills) → Past (relevant experience) → Future (why this company/role). Keep to 90 seconds. Focus on professional highlights, not personal biography. Connect your background directly to the job requirements. End with enthusiasm for this specific opportunity.
+
+Example: "I'm a software engineer with 3 years of experience building scalable web applications at [Company]. I've led projects that improved system performance by 40% and mentored 2 junior developers. Before that, I completed my Computer Science degree where I specialized in distributed systems. I'm excited about [Target Company] because of your focus on AI-driven products — which aligns perfectly with my recent work on ML pipelines."
+
+### Strengths and Weaknesses
+Q: What is your greatest strength?
+A: Choose a strength directly relevant to the role. Provide evidence with a specific example. Quantify impact when possible. Avoid generic answers like "I'm a hard worker." Strong answers: problem-solving with data ("I reduced deployment time by 60% by automating our CI/CD pipeline"), technical leadership, cross-functional collaboration.
+
+Q: What is your greatest weakness?
+A: Choose a real but non-critical weakness. Show self-awareness AND active improvement steps. Avoid clichéd answers ("I work too hard"). Example: "I used to struggle with delegating tasks because I wanted to ensure quality. I've been actively improving by setting clear expectations, using code review checklists, and trusting my team. This has allowed me to focus on higher-level architecture while the team grows in confidence."
+
+### Motivation and Goals
+Q: Where do you see yourself in 5 years?
+A: Align answer with company's growth trajectory. Show ambition without threatening interviewer's position. Focus on skills development, leadership potential, and value contribution. Example: "I want to grow into a technical lead role where I can drive architectural decisions and mentor others. I see [Company] as the perfect place to do this given your scale and the complex engineering challenges you tackle."
+
+Q: Why do you want to work at our company?
+A: Research the company thoroughly before interview. Mention: specific products/technologies, company culture/values, growth opportunities, recent achievements. Avoid: salary, just applying everywhere, vague answers. Show genuine enthusiasm backed by knowledge of their business.
+
+Q: Why are you leaving your current job?
+A: Always be positive about past employer. Focus on: growth opportunity, new challenges, skill expansion, better role alignment. Never say: bad management, low salary (first), conflicts with colleagues, fired. Example: "I've learned tremendously at my current company, but I'm ready for the next challenge. Your work in [specific area] directly aligns with where I want to grow my expertise."
+
+## BEHAVIORAL QUESTIONS (STAR FORMAT)
+
+### Leadership and Initiative
+Q: Describe a time you showed leadership without a formal title.
+STAR Example: "Situation: Our team's deployment process was taking 3+ hours and causing Friday evening anxiety. Task: As a mid-level developer, I identified this as a critical quality-of-life issue. Action: I researched CI/CD solutions, created a proof-of-concept with GitHub Actions, documented the setup, and presented it to my team lead with ROI data. I then led the implementation over 2 sprints, training the team. Result: Deployment time dropped from 3 hours to 20 minutes. Team satisfaction improved, and we could deploy on Fridays confidently. This was later adopted by two other teams."
+
+Q: Tell me about a time you influenced a decision without authority.
+A: Use data and logic rather than authority. Build coalitions by involving stakeholders early. Present multiple options, not just your preference. Frame in terms of business impact. Show respect for the decision-maker.
+
+### Conflict and Collaboration
+Q: Describe a conflict with a coworker and how you resolved it.
+STAR Example: "Situation: A colleague and I disagreed on the database architecture for a new feature — they preferred NoSQL for flexibility, I advocated for PostgreSQL for ACID compliance. Task: We needed to reach a decision quickly to not delay the sprint. Action: I proposed we each write a one-page technical brief with pros/cons. We then had a 30-minute structured discussion. I acknowledged valid points in their approach and suggested a hybrid: PostgreSQL for transactional data, Redis for caching. Result: We delivered the feature on time, and the hybrid approach became a team standard. Our professional relationship actually strengthened through this process."
+
+Q: Tell me about a time you worked with a difficult team member.
+A: Focus on your professional behavior, not their faults. Show empathy and understanding. Describe specific actions taken. Highlight positive outcome or learning. Avoid making the other person look bad.
+
+### Problem Solving Under Pressure
+Q: Describe a time you handled a high-pressure situation.
+STAR Example: "Situation: On a product launch day, our payment service went down 2 hours before go-live with 50,000 users expected. Task: As the on-call engineer, I needed to diagnose and fix the issue rapidly. Action: I immediately set up a war room channel, pulled logs identifying a misconfigured environment variable in the new deployment, rolled back the config change while a permanent fix was prepared, communicated status updates every 10 minutes to stakeholders, and coordinated with the payment provider API team. Result: Service restored in 47 minutes. Launch proceeded with only a 1-hour delay. I also wrote a postmortem with 5 preventive measures, 3 of which were implemented in the next sprint."
+
+Q: Tell me about a time you failed and what you learned.
+A: Own the failure genuinely. Explain context without making excuses. Detail specific learnings. Show how you applied those learnings. Demonstrates self-awareness and growth mindset.
+
+### Adaptability and Change
+Q: Tell me about a time you had to adapt to a significant change.
+A: Emphasize positive attitude toward change. Show proactive learning. Describe concrete adaptation steps. Link to business outcomes. Avoid complaining about the change.
+
+Q: Describe a time you learned a new technology or skill quickly.
+A: Explain the urgency/context. Describe your learning approach (structured resources, hands-on practice, mentorship). Quantify the timeline. Show what you built or achieved. Mention how you shared the knowledge.
+
+## CULTURE FIT QUESTIONS
+
+Q: What type of work environment do you thrive in?
+A: Research the company's culture before answering. If they're Agile, mention collaboration and iteration. If startup, show comfort with ambiguity. If enterprise, show process-orientation. Be honest — cultural mismatch is bad for both parties.
+
+Q: How do you handle feedback and criticism?
+A: Show you actively seek feedback, not just accept it. Describe a specific example of receiving critical feedback. Explain how you processed and acted on it. Demonstrate growth mindset. Good formula: "I appreciate direct feedback because it helps me grow. For example, my manager once told me my code documentation was insufficient. I immediately created a documentation standard for our team and now all my PRs include clear inline comments and README updates."
+
+Q: What motivates you at work?
+A: Authentic answers resonate more. Common strong motivators: solving complex problems, making user impact, teaching/mentoring others, building something that scales. Connect to the role. Avoid: "money", "stability" (even if true, frame it differently).
+
+## SALARY AND NEGOTIATION
+
+Q: What are your salary expectations?
+A: Research market rates before the interview (Glassdoor, LinkedIn Salary, levels.fyi for tech). Give a range with the low end at your target. Back it with market data and your experience. Example: "Based on my research for this role and location, and given my 4 years of relevant experience with [specific skills], I'm targeting $95,000-$110,000. I'm open to discussing the full compensation package."
+
+Q: Do you have any questions for us?
+A: Always have 3-5 thoughtful questions. Ask about: team structure, biggest challenges for this role, success metrics in 90 days, growth opportunities, tech stack decisions, how the team handles technical debt. Never ask about salary/benefits in first interview. Never say "No, I think you've covered everything."
+
+## CLOSING STRONG
+
+Q: Why should we hire you?
+A: Directly connect your top 3 strengths to the job requirements. Be confident, not arrogant. Make it about value you'll bring, not need. Summarize with enthusiasm. Example: "Three reasons: First, my experience with distributed systems at scale directly matches your infrastructure challenges. Second, I've led cross-functional teams and can collaborate effectively with product and design. Third, I'm genuinely excited about your AI products and will hit the ground running. I'm ready to make an immediate impact."

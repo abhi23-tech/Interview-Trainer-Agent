@@ -1,0 +1,186 @@
+COMPANY-SPECIFIC INTERVIEW KNOWLEDGE BASE
+==========================================
+
+## GOOGLE INTERVIEW PROCESS
+
+### Interview Rounds
+1. Recruiter Phone Screen (30 min) — background, motivation, salary
+2. Technical Phone Screen (45-60 min) — coding on Google Docs
+3. Onsite (4-5 rounds): 2-3 coding rounds, 1 system design, 1 Googleyness/Leadership
+4. Hiring Committee Review
+5. Team Matching
+
+### Google Coding Expectations
+- Clean, correct, optimal code — always discuss time/space complexity
+- Think aloud — interviewers evaluate thought process
+- Start with brute force, then optimize
+- Test your code with edge cases
+- Google values: correctness > optimization > style
+
+### Google Leadership Principles (Googleyness)
+- Comfort with ambiguity — can you make decisions with incomplete information?
+- Collaboration — how do you work in teams and handle disagreements?
+- Impact focus — have you delivered meaningful results?
+- Intellectual curiosity — are you always learning?
+
+### Google System Design Focus
+- Design for scale (millions of users, petabytes of data)
+- Discuss trade-offs explicitly
+- Topics: Consistent hashing, distributed caching, MapReduce, Bigtable, Spanner concepts
+- Key question areas: Search, Maps, YouTube, Gmail-scale systems
+
+## AMAZON INTERVIEW PROCESS
+
+### Leadership Principles (All interviews)
+Amazon evaluates every question against their 16 Leadership Principles:
+1. Customer Obsession — start with customer, work backwards
+2. Ownership — act on behalf of entire company
+3. Invent and Simplify — find new solutions, embrace change
+4. Are Right, A Lot — strong judgment, diverse perspectives
+5. Learn and Be Curious — never stop learning
+6. Hire and Develop the Best — raise performance bar
+7. Insist on the Highest Standards — relentlessly high standards
+8. Think Big — bold direction, different thinking
+9. Bias for Action — speed matters, take calculated risks
+10. Frugality — accomplish more with less
+11. Earn Trust — listen, candid, self-critical
+12. Dive Deep — stay connected to details
+13. Have Backbone; Disagree and Commit — challenge respectfully
+14. Deliver Results — focus on key inputs, deliver with quality
+15. Strive to be Earth's Best Employer
+16. Success and Scale Bring Broad Responsibility
+
+### Amazon STAR Answers
+- Prepare 8-10 strong STAR stories covering multiple LPs
+- Use data and metrics in every answer
+- Emphasize "I" actions, not team
+- Show ownership even when things went wrong
+
+### Amazon Bar Raiser
+- Independent interviewer who ensures hiring bar consistency
+- Focuses on LPs and overall bar
+- Has veto power on hire decisions
+
+## MICROSOFT INTERVIEW PROCESS
+
+### Growth Mindset (Satya Nadella's Core Value)
+Microsoft values candidates who:
+- Embrace challenges as learning opportunities
+- Learn from failure and criticism
+- Persist through obstacles
+- Find inspiration in others' success
+- Have curiosity and willingness to develop new skills
+
+### Interview Structure
+1. 4-6 rounds: Coding, Design, Behavioral
+2. As Appropriate (AA): additional senior interviewer for final decision
+3. Focus on collaborative problem-solving
+4. Can use any programming language
+
+### Microsoft Coding Style
+- They value communication over perfect code
+- Discuss multiple approaches before coding
+- Focus on scalability and maintainability
+- Testing and debugging are evaluated
+
+## META (FACEBOOK) INTERVIEW PROCESS
+
+### Meta Coding Philosophy
+- Speed matters — solve problems quickly
+- Focus on optimal solutions
+- Strong emphasis on data structures and graph problems
+- BFS/DFS, Dynamic Programming frequently tested
+
+### Meta Core Values (Evaluated in Behavioral)
+- Move fast — rapid iteration over perfection
+- Be Bold — take big risks
+- Focus on impact — measure success by real impact
+- Be open — transparency and information sharing
+- Build social value
+
+### Meta System Design
+- News Feed design, Social Graph, Messenger-scale
+- Focus on distributed systems, eventual consistency
+- Content delivery, recommendation systems
+
+## APPLE INTERVIEW PROCESS
+
+### Apple Culture Questions
+- Details matter — perfectionism and attention to detail
+- How would you make a product 10x better?
+- Cross-functional collaboration across hardware/software
+- Privacy and security consciousness
+
+### Apple Technical Focus
+- iOS/macOS specific roles: Swift, Objective-C, Core Data, UIKit/SwiftUI
+- Systems roles: C++, performance optimization, memory management
+- Services roles: Distributed systems, reliability
+
+## STARTUPS INTERVIEW PROCESS
+
+### Startup Interview Characteristics
+- Often informal, conversational
+- CEO or founders may interview directly
+- Strong emphasis on culture fit and adaptability
+- Take-home projects common
+- Questions about handling ambiguity and multiple responsibilities
+- Wearing many hats expectation
+- Equity and compensation conversation earlier
+
+### Key Startup Questions
+- "Where do you see this company in 5 years?"
+- "How do you handle changing priorities mid-sprint?"
+- "Describe a time you built something from scratch."
+- "What would you do in the first 30/60/90 days?"
+
+## FAANG/BIG TECH GENERAL TIPS
+
+### Preparation Timeline
+- 8-12 weeks dedicated prep for FAANG
+- Week 1-3: Core data structures and algorithms review
+- Week 4-6: LeetCode Medium problems (target 100+ problems)
+- Week 7-8: System design fundamentals
+- Week 9-10: Behavioral story preparation
+- Week 11-12: Mock interviews and company-specific prep
+
+### Common Mistakes to Avoid
+- Jumping to code without clarifying requirements
+- Not analyzing time/space complexity
+- Ignoring edge cases (empty input, null, overflow)
+- Not communicating while thinking
+- Writing unrunnable code
+- Not testing your solution after writing
+
+### LeetCode Patterns to Master
+- Two Pointers
+- Sliding Window
+- Fast and Slow Pointers
+- Merge Intervals
+- Cyclic Sort
+- In-place Reversal of LinkedList
+- Tree BFS/DFS
+- Two Heaps
+- Subsets/Backtracking
+- Dynamic Programming patterns
+- Graph Traversal
+- Topological Sort
+
+## IBM INTERVIEW PROCESS
+
+### IBM Values
+- Innovation — think beyond obvious solutions
+- Dedication to client success
+- Trust and responsibility — ethical AI, data privacy
+- Inclusion — diverse perspectives valued
+
+### IBM Technical Focus
+- Cloud and AI: Watson, Watsonx, IBM Cloud
+- Enterprise: Mainframe, COBOL, z/OS for legacy roles
+- Open Source contributions valued
+- RedHat/Kubernetes/OpenShift for cloud-native roles
+
+### IBM Behavioral Questions
+- Community and social impact
+- Mentoring and knowledge sharing
+- Long-term career thinking
+- Client-first mindset
