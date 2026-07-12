@@ -432,7 +432,7 @@ def health():
             "status": "ok",
             "rag_chunks": len(rag._chunks),
             "rag_ready": rag._ready,
-            "model": os.getenv("GRANITE_MODEL_ID", "ibm/granite-4-h-small"),
+            "model": os.getenv("GRANITE_MODEL_ID", "ibm/granite-8b-code-instruct"),
         })
     except Exception as exc:
         return jsonify({"status": "error", "error": str(exc)}), 500

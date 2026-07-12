@@ -1,6 +1,6 @@
 # InterviewAI — AI-Powered Interview Trainer
 
-> Built with **IBM Watsonx.ai Granite 4.0 MoE** · **FAISS RAG** · **Flask** · **Dark Theme UI**
+> Built with **IBM Watsonx.ai Granite 8B Code Instruct** · **FAISS RAG** · **Flask** · **Dark Theme UI**
 
 A production-ready, ChatGPT-style interview coaching web app that helps candidates ace technical, HR, behavioural, and company-specific interviews using IBM's Granite foundation models with retrieval-augmented generation (RAG).
 
@@ -10,7 +10,7 @@ A production-ready, ChatGPT-style interview coaching web app that helps candidat
 
 | Feature | Details |
 |---|---|
-| 🤖 AI Coach | IBM Granite 4.0 MoE (granite-4-h-small) via Watsonx.ai |
+| 🤖 AI Coach | IBM Granite 8B Code Instruct (granite-8b-code-instruct) via Watsonx.ai |
 | 📚 RAG Engine | FAISS + sentence-transformers (MiniLM-L6) |
 | 📄 Resume Upload | PDF, DOCX, DOC, TXT parsing with skill extraction |
 | 🎯 Personalisation | Role, experience, company, skills profile |
@@ -93,7 +93,7 @@ IBM_API_KEY=your_ibm_cloud_api_key
 IBM_PROJECT_ID=your_watsonx_project_id
 IBM_WATSONX_URL=https://us-south.ml.cloud.ibm.com
 FLASK_SECRET_KEY=your-random-secret-key
-GRANITE_MODEL_ID=ibm/granite-4-h-small
+GRANITE_MODEL_ID=ibm/granite-8b-code-instruct
 ```
 
 ### 4 · Run
@@ -248,7 +248,7 @@ MAX_TOKENS=1024
 | Layer | Technology |
 |---|---|
 | Backend | Python 3.11, Flask 3.0 |
-| AI | IBM Watsonx.ai, Granite 4.0 MoE (granite-4-h-small) |
+| AI | IBM Watsonx.ai, Granite 8B Code Instruct (granite-8b-code-instruct) |
 | RAG | FAISS, sentence-transformers (all-MiniLM-L6-v2) |
 | Resume | PyMuPDF, python-docx, pdfplumber |
 | Frontend | Bootstrap 5.3, Vanilla JS, marked.js, highlight.js |
