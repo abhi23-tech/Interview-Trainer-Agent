@@ -14,13 +14,24 @@ from typing import List, Tuple
 logger = logging.getLogger(__name__)
 
 # ── optional heavy imports (graceful fallback) ─────────────────────────────
+import os
+
+# Skip heavy ML imports in memory-constrained environments (like Render Free Tier)
+# to keep the memory footprint under 100 MB and prevent Out-of-Memory crashes.
+_FORCE_KEYWORD = (
+    os.getenv("DISABLE_EMBEDDINGS", "False").lower() == "true"
+    or os.getenv("RENDER", "False").lower() == "true"  # Render always injects RENDER=true
+)
+
 try:
+    if _FORCE_KEYWORD:
+        raise ImportError("Forced keyword RAG fallback for low-resource environment")
     from sentence_transformers import SentenceTransformer
     import faiss
     _DEPS_AVAILABLE = True
-except ImportError:
+except ImportError as exc:
     _DEPS_AVAILABLE = False
-    logger.warning("sentence-transformers or faiss not installed — RAG disabled (keyword fallback active)")
+    logger.warning(f"RAG embeddings disabled: {exc} — keyword fallback active")
 
 
 # ──────────────────────────────────────────────────────────────────────────
