@@ -21,7 +21,7 @@ class WatsonxClient:
         api_key: str,
         project_id: str,
         url: str = "https://us-south.ml.cloud.ibm.com",
-        model_id: str = "ibm/granite-3-3-8b-instruct",
+        model_id: str = "ibm/granite-4-h-small",
         max_tokens: int = 1024,
         temperature: float = 0.7,
     ):
@@ -167,7 +167,7 @@ def get_watsonx_client() -> WatsonxClient:
         api_key = os.getenv("IBM_API_KEY", "")
         project_id = os.getenv("IBM_PROJECT_ID", "")
         url = os.getenv("IBM_WATSONX_URL", "https://us-south.ml.cloud.ibm.com")
-        model_id = os.getenv("GRANITE_MODEL_ID", "ibm/granite-3-3-8b-instruct")
+        model_id = os.getenv("GRANITE_MODEL_ID", "ibm/granite-4-h-small")
         max_tokens = int(os.getenv("MAX_TOKENS", "1024"))
         temperature = float(os.getenv("TEMPERATURE", "0.7"))
 
