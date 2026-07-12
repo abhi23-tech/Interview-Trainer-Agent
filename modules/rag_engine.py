@@ -27,7 +27,7 @@ except ImportError:
 #  Text chunking helpers
 # ──────────────────────────────────────────────────────────────────────────
 
-def _chunk_text(text: str, chunk_size: int = 600, overlap: int = 80) -> List[str]:
+def _chunk_text(text: str, chunk_size: int = 200, overlap: int = 30) -> List[str]:
     """Split text into overlapping word-level chunks."""
     words = text.split()
     chunks: List[str] = []
